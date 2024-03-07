@@ -1,0 +1,80 @@
+
+---
+- name: F5 disable vips
+  hosts: dev_banking_app_f5
+  connection: local
+  gather_facts: false
+
+  tasks:
+  - name: Get credentials
+    set_fact:
+        ansible_user: "{{ lookup('env', 'ANSIBLE_NET_USERNAME') }}"
+        ansible_password: "{{ lookup('env', 'ANSIBLE_NET_PASSWORD')}}"
+    failed_when:
+      - not ansible_user
+      - not ansible_password
+    no_log: false
+
+  - name: Get virtual servers from active F5
+    bigip_device_info:
+      gather_subset:
+       - virtual-servers
+      provider:
+        server: "{{ ansible_host }}"
+        user: "{{ ansible_user }}"
+        password: "{{ ansible_password }}"
+        no_f5_teem: true
+        server_port: 443
+        validate_certs: False
+    register: vs_data
+    delegate_to: localhost
+
+  - name: Check state of F5 and set device details.
+    include_role:
+      name: f5_single_device_manager_role
+    vars:
+      test_mode: true
+      operation: "happy_path_active"
+ 
+  - name: Create new list 
+    set_fact:
+      parsed_vs_list: "{{ parsed_vs_list  | default([]) }}"
+      parsed_vs_rest_list: "{{ parsed_vs_rest_list  | default([]) }}"
+
+  - name: Pull out resource variables from service definition
+    set_fact:
+      service_resources: "{{ next_definition }}"
+    loop: "{{ dev_BA_F5_resource_definition }}"
+    loop_control:
+      loop_var: next_definition
+    when: next_definition.name == "dev_banking_app_resource_group"
+
+  - name: Check Virtual Servers from Facts DATA
+    include_role:
+      name: f5_virtual_svr_manager_role
+    vars:
+      partition: "{{ service_resources.ba_partition }}"
+      vs_name: "{{ next_ba_vs }}"
+    loop: "{{ service_resources.ba_vs_names }}"
+    loop_control:
+      loop_var: next_ba_vs
+  
+  - name: Check URLs in F5 using REST API
+    include_tasks:
+      file: f5_check_urls.yml
+    vars:
+      partition: "{{ service_resources.ba_partition }}"
+      vs_name: "{{ next_ba_vs }}"
+    loop: "{{ service_resources.ba_vs_names }}"
+    loop_control:
+      loop_var: next_ba_vs
+
+  - name: Save contents to json
+    copy:
+      dest: "./files/{{ inventory_hostname }}.json"
+      content: "{{ parsed_vs_list  | to_nice_json }}"
+
+  - name: Save content of REST API
+    copy:
+      dest: "./files/{{ inventory_hostname }}_api.json"
+      content: "{{ parsed_vs_rest_list  | to_nice_json }}"

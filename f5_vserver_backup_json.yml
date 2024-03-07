@@ -1,0 +1,49 @@
+---
+ - name: Capture Virtual Server Config via F5 REST API
+   hosts: dev_f5
+   connection: local
+   gather_facts: false
+
+   tasks:
+   - name: Get credentials
+     set_fact:
+         ansible_user: "{{ lookup('env', 'ANSIBLE_NET_USERNAME') }}"
+         ansible_password: "{{ lookup('env', 'ANSIBLE_NET_PASSWORD')}}"
+     failed_when:
+       - not ansible_user
+       - not ansible_password
+     no_log: false
+
+   - name: Check state of F5 and set device details.
+     include_role:
+       name: f5_single_device_manager_role
+     vars:
+       test_mode: true
+       operation: "happy_path_active"
+
+   - name: Create empty list to store F5 data
+     set_fact:
+       parsed_vs_rest_list: "{{ parsed_vs_rest_list  | default([]) }}"
+
+   - name: Pull out resource variables from service definition
+     set_fact:
+       service_resources: "{{ next_definition }}"
+     loop: "{{ dev_F5_resource_definition }}"
+     loop_control:
+       loop_var: next_definition
+     when: next_definition.name == "dev_resource_group"
+
+   - name: Check virtual servers using F5 REST API
+     include_tasks:
+       file: f5_check_urls.yml
+     vars:
+       partition: "{{ service_resources.partition }}"
+       vs_name: "{{ next_vs }}"
+     loop: "{{ service_resources.vs_names }}"
+     loop_control:
+       loop_var: next_vs
+
+   - name: Save content of REST API
+     copy:
+       dest: "./files/{{ inventory_hostname }}.json"
+       content: "{{ parsed_vs_rest_list  | to_nice_json }}"

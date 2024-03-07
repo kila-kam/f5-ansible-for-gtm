@@ -1,0 +1,66 @@
+ [
+            {
+                "alternate": {
+                    "value": 0
+                },
+                "fallback": {
+                    "value": 0
+                },
+                "poolName": {
+                    "description": "/Common/gtm_http_pool"
+                },
+                "poolType": {
+                    "description": "A"
+                },
+                "preferred": {
+                    "value": 0
+                },
+                "serverName": {
+                    "description": "/Common/lon1-f5-dev.local"
+                },
+                "status.availabilityState": {
+                    "description": "available"
+                },
+                "status.enabledState": {
+                    "description": "enabled"
+                },
+                "status.statusReason": {
+                    "description": "Available"
+                },
+                "vsName": {
+                    "description": "/Common/http_virtual"
+                }
+            },
+            {
+                "alternate": {
+                    "value": 0
+                },
+                "fallback": {
+                    "value": 0
+                },
+                "poolName": {
+                    "description": "/Common/gtm_http_pool"
+                },
+                "poolType": {
+                    "description": "A"
+                },
+                "preferred": {
+                    "value": 0
+                },
+                "serverName": {
+                    "description": "/Common/lon1-f5-dev.local"
+                },
+                "status.availabilityState": {
+                    "description": "available"
+                },
+                "status.enabledState": {
+                    "description": "disabled"
+                },
+                "status.statusReason": {
+                    "description": "Available: disabled directly"
+                },
+                "vsName": {
+                    "description": "/Common/https_virtual"
+                }
+            }
+        ]

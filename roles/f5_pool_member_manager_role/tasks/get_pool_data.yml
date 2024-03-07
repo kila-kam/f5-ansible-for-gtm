@@ -1,0 +1,34 @@
+---
+- name: Get pool states from the active F5
+  bigip_device_info:
+    gather_subset:
+     - ltm-pools
+    provider:
+     server: "{{ ansible_host }}"
+     user: "{{ ansible_user }}"
+     password: "{{ ansible_password }}"
+     validate_certs: false
+     no_f5_teem: true
+     server_port: 443
+  register: pool_data
+  delegate_to: localhost
+  tags: audit
+
+- name: Parse pool data to pool of interests
+  set_fact:
+    parsed_pool_data: "{{ item }}"
+  loop: "{{ pool_data.ltm_pools }}"
+  when: pool_name == item.name
+  tags: audit
+
+- name: show pool data output 
+  debug:
+    var: parsed_pool_data
+
+- name: Set pool member filter.
+  set_fact:
+    f5_pool_member_filter:  "{{ next_filter.filter_list }}"
+  loop: "{{ f5_pool_filters }}"
+  loop_control:
+    loop_var: next_filter
+  when: f5_pool_filters is defined and next_filter.pool_name == pool_name

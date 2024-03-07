@@ -1,0 +1,28 @@
+---
+- name: Restore configuration of F5 virtual servers 
+  hosts: dev_banking_app_f5
+  connection: local
+  gather_facts: false
+
+  tasks:
+  - name: Check URLs in F5 using REST API
+    include_tasks:
+      file: f5_rest_login.yml
+
+  - name: Load virtual server JSON file  
+    set_fact:
+        config: "{{ lookup('file', '{{ inventory_hostname }}.json') | from_json }}"
+
+  - name: Deploy virtual server via F5 REST API 
+    uri: 
+      url: https://{{ ansible_host }}/mgmt/tm/ltm/virtual
+      method: POST
+      validate_certs: false
+      headers:
+         X-F5-Auth-Token: "{{ bigip_auth_token }}" 
+      body:
+        "{{ item }}"
+      body_format: json
+    delegate_to: localhosts
+    loop: "{{ config }}"
+

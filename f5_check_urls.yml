@@ -1,0 +1,28 @@
+---
+- name: Send new state to pool using REST
+  uri: 
+    url: https://{{ ansible_host }}/mgmt/tm/ltm/virtual/{{ vs_name }}?expandSubcollections=true
+    method: GET
+    validate_certs: false
+    headers:
+       X-F5-Auth-Token: "{{ bigip_auth_token }}" 
+  delegate_to: localhosts
+  register: rest
+
+- name: Change state of virtual server using REST
+  uri: 
+    url: https://{{ ansible_host }}/mgmt/tm/ltm/virtual/{{ vs_name }}
+    method: PATCH
+    validate_certs: false
+    headers:
+       X-F5-Auth-Token: "{{ bigip_auth_token }}" 
+    body:
+      disabled: true
+    body_format: json
+  delegate_to: localhosts
+  register: rest
+  when operation is true 
+
+- name: Parse data of interests
+  set_fact:
+    parsed_vs_rest_list : "{{ parsed_vs_rest_list  + [ rest.json ] }}"

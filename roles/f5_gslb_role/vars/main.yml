@@ -1,0 +1,9 @@
+---
+# vars file for f5_gslb_role
+parsed_gtm_pool: []
+parsed_gtm_pool_stats: []
+gtm_pool_state_list:
+- operation: "enable"
+  status: {enabled: true}
+- operation: "disable"
+  status: {disabled: true}

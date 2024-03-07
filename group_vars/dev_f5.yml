@@ -1,0 +1,16 @@
+dev_resource_definition:
+ - name: "dev_resource_group"
+   partition: "Common"
+   pool_names:
+    - http-pool
+    - iRules_pool2
+   vs_names:
+    - test_virtual_1
+    - test_virtual_2
+    - test_virtual_3
+ - name: "gtm_resource_group"
+   partition: "Common"
+   gslb_pool_name:
+    - gslb_pool_1
+    - gslb_pool_2
+    - gslb_pool_3

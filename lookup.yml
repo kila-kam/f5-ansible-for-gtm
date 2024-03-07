@@ -1,0 +1,17 @@
+
+---
+- name: Test lookup
+  hosts: f5.home.lab
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: lookup json file
+      set_fact:
+          result: "{{ lookup('file', '{{ inventory_hostname }}.json') | from_json }}"
+
+    - debug:
+        var: result[0].name
+       # msg: "{{ result.ansible_facts | json_query(query) }}"
+     # vars:
+      #  query: "ansible_net_devices[?self=='yes'].failover_state"

@@ -1,0 +1,40 @@
+---
+- name: Run test.
+  debug:
+    msg: 
+      - "****************************************"
+      - "****************************************"
+      - " RUNNING TEST - {{ test_description }}"
+      - "****************************************"
+      - "****************************************" 
+  when: test_mode
+  tags: test
+
+- name: Set sync management if not set.
+  set_fact:
+    f5_manage_sync: true
+  when: f5_manage_sync is undefined
+
+- name: Change pool states.
+  block: 
+   - name: Get and display current pool data
+     include_tasks: get_pool_data.yml
+     when: f5_input_pool_data is undefined
+     tags: audit
+
+   - name: set pool data if it was provided
+     set_fact:
+       parsed_pool_data: "{{ f5_input_pool_data }}"
+     when: f5_input_pool_data is defined
+
+   - name: set pool state variable depending on operation
+     set_fact:
+       new_pool_state: "{{ next_state }}"
+     loop: "{{ F5_pool_state_list }}"
+     loop_control:
+       loop_var: next_state
+     when: next_state.operation == operation
+     tags: change
+  
+   - name: Change the state of pool members.
+     include_tasks: change_pool_state.yml

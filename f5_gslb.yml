@@ -1,0 +1,75 @@
+---
+- name: gtm checks
+  hosts: dev_f5
+  connection: local
+  gather_facts: true
+
+  vars:
+    pool_member_prefix: https_virtual
+    partition: Common
+    operation: disable
+    gtm_pool_state_list:
+    - operation: enable
+      status: 
+        enabled: true
+    - operation: disable
+      status: 
+        disabled: true
+
+  tasks:
+  - name: Check URLs in F5 using REST API
+    include_tasks:
+      file: f5_rest_login.yml
+
+  - name: Set fact for operation 
+    set_fact:
+      service_operation: "{{ item['status'] }}"
+    loop: "{{ gtm_pool_state_list }}"
+    when: item.operation == operation
+
+  - name: Set fact for empty list
+    set_fact:
+      parsed_gtm_pool: []
+      parsed_gtm_pool_stats: []
+
+  - name: Pull out resource variables from service definition
+    set_fact:
+      service_resources: "{{ next_definition }}"
+    loop: "{{ dev_resource_definition }}"
+    loop_control:
+      loop_var: next_definition
+    when: next_definition.name == "gtm_resource_group"
+    tags: audit
+ 
+  - name: Check GSLB pool using REST
+    include_tasks: f5_gslb_check_pools.yml
+    vars:
+      partition: "{{ service_resources.partition }}"
+      gslb_pool_name: "{{ next_gslb_pool_name }}"
+    loop: "{{ service_resources.gslb_pool_name }}"
+    loop_control:
+      loop_var: next_gslb_pool_name
+    tags: audit
+
+  - name: Save pre-change output
+    template: 
+      src: gtm.j2 
+      dest: "./output/pre_change-{{ inventory_hostname }}-gtm_pool_stats-{{ ansible_date_time.iso8601 }}.txt"
+
+  - name: Mark GSLB pools down using REST
+    include_tasks: f5_gslb_change.yml
+    vars:
+      partition: "{{ service_resources.partition }}"
+      gslb_pool_name: "{{ next_gslb_pool_name }}"
+    loop: "{{ service_resources.gslb_pool_name }}"
+    loop_control:
+      loop_var: next_gslb_pool_name
+    tags: change
+
+
+ #add  varibales to indicate if you want to save objects as csv or save output
+
+ # - name: Save JSON content
+ #   copy:
+ #     dest: "./files/{{ inventory_hostname }}-gtm_pool.json"
+ #     content: "{{ parsed_gtm_pool  | to_nice_json }}"

@@ -1,0 +1,13 @@
+---
+# vars file for f5_pool_member_manager_role
+F5_pool_state_list:
+ - operation: "mark-down"
+   session: "user-disabled"
+   state: "user-up"
+ - operation: "mark-up"
+   session: "user-enabled"
+   state: "user-up"
+ - operation: "force-down"
+   session: "user-disabled"
+   state: "user-down"
+   

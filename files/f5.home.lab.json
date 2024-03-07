@@ -1,0 +1,313 @@
+[
+    {
+        "addressStatus": "yes",
+        "autoLasthop": "default",
+        "cmpEnabled": "yes",
+        "connectionLimit": 0,
+        "creationTime": "2024-01-31T21:57:51Z",
+        "description": "created by ansible",
+        "destination": "/Common/10.10.100.110:443",
+        "enabled": true,
+        "evictionProtected": "disabled",
+        "fullPath": "test_virtual_1",
+        "generation": 24,
+        "gtmScore": 0,
+        "ipProtocol": "tcp",
+        "kind": "tm:ltm:virtual:virtualstate",
+        "lastModifiedTime": "2024-01-31T21:57:51Z",
+        "mask": "255.255.255.255",
+        "mirror": "disabled",
+        "mobileAppTunnel": "disabled",
+        "name": "test_virtual_1",
+        "nat64": "disabled",
+        "policiesReference": {
+            "isSubcollection": true,
+            "link": "https://localhost/mgmt/tm/ltm/virtual/~Common~test_virtual_1/policies?ver=15.1.8"
+        },
+        "pool": "/Common/http-pool",
+        "poolReference": {
+            "link": "https://localhost/mgmt/tm/ltm/pool/~Common~http-pool?ver=15.1.8"
+        },
+        "profilesReference": {
+            "isSubcollection": true,
+            "items": [
+                {
+                    "context": "all",
+                    "fullPath": "/Common/http",
+                    "generation": 24,
+                    "kind": "tm:ltm:virtual:profiles:profilesstate",
+                    "name": "http",
+                    "nameReference": {
+                        "link": "https://localhost/mgmt/tm/ltm/profile/http/~Common~http?ver=15.1.8"
+                    },
+                    "partition": "Common",
+                    "selfLink": "https://localhost/mgmt/tm/ltm/virtual/~Common~test_virtual_1/profiles/~Common~http?ver=15.1.8"
+                },
+                {
+                    "context": "all",
+                    "fullPath": "/Common/tcp",
+                    "generation": 24,
+                    "kind": "tm:ltm:virtual:profiles:profilesstate",
+                    "name": "tcp",
+                    "nameReference": {
+                        "link": "https://localhost/mgmt/tm/ltm/profile/tcp/~Common~tcp?ver=15.1.8"
+                    },
+                    "partition": "Common",
+                    "selfLink": "https://localhost/mgmt/tm/ltm/virtual/~Common~test_virtual_1/profiles/~Common~tcp?ver=15.1.8"
+                },
+                {
+                    "context": "clientside",
+                    "fullPath": "/Common/vlab.f5demo.com_clientssl",
+                    "generation": 24,
+                    "kind": "tm:ltm:virtual:profiles:profilesstate",
+                    "name": "vlab.f5demo.com_clientssl",
+                    "nameReference": {
+                        "link": "https://localhost/mgmt/tm/ltm/profile/client-ssl/~Common~vlab.f5demo.com_clientssl?ver=15.1.8"
+                    },
+                    "partition": "Common",
+                    "selfLink": "https://localhost/mgmt/tm/ltm/virtual/~Common~test_virtual_1/profiles/~Common~vlab.f5demo.com_clientssl?ver=15.1.8"
+                }
+            ],
+            "link": "https://localhost/mgmt/tm/ltm/virtual/~Common~test_virtual_1/profiles?ver=15.1.8"
+        },
+        "rateLimit": "disabled",
+        "rateLimitDstMask": 0,
+        "rateLimitMode": "object",
+        "rateLimitSrcMask": 0,
+        "rules": [
+            "/Common/http_virtual_iRule-404-Response-Page"
+        ],
+        "rulesReference": [
+            {
+                "link": "https://localhost/mgmt/tm/ltm/rule/~Common~http_virtual_iRule-404-Response-Page?ver=15.1.8"
+            }
+        ],
+        "selfLink": "https://localhost/mgmt/tm/ltm/virtual/test_virtual_1?expandSubcollections=true&ver=15.1.8",
+        "serversslUseSni": "disabled",
+        "serviceDownImmediateAction": "none",
+        "source": "0.0.0.0/0",
+        "sourceAddressTranslation": {
+            "type": "automap"
+        },
+        "sourcePort": "preserve",
+        "synCookieStatus": "not-activated",
+        "translateAddress": "enabled",
+        "translatePort": "enabled",
+        "vlansDisabled": true,
+        "vsIndex": 11
+    },
+    {
+        "addressStatus": "yes",
+        "autoLasthop": "default",
+        "cmpEnabled": "yes",
+        "connectionLimit": 0,
+        "creationTime": "2024-01-31T21:33:54Z",
+        "description": "created by ansible",
+        "destination": "/Common/10.10.100.111:443",
+        "enabled": true,
+        "evictionProtected": "disabled",
+        "fullPath": "test_virtual_2",
+        "generation": 26,
+        "gtmScore": 0,
+        "ipProtocol": "tcp",
+        "kind": "tm:ltm:virtual:virtualstate",
+        "lastModifiedTime": "2024-01-31T22:00:07Z",
+        "mask": "255.255.255.255",
+        "mirror": "disabled",
+        "mobileAppTunnel": "disabled",
+        "name": "test_virtual_2",
+        "nat64": "disabled",
+        "policiesReference": {
+            "isSubcollection": true,
+            "link": "https://localhost/mgmt/tm/ltm/virtual/~Common~test_virtual_2/policies?ver=15.1.8"
+        },
+        "pool": "/Common/http-pool",
+        "poolReference": {
+            "link": "https://localhost/mgmt/tm/ltm/pool/~Common~http-pool?ver=15.1.8"
+        },
+        "profilesReference": {
+            "isSubcollection": true,
+            "items": [
+                {
+                    "context": "clientside",
+                    "fullPath": "/Common/clientssl",
+                    "generation": 25,
+                    "kind": "tm:ltm:virtual:profiles:profilesstate",
+                    "name": "clientssl",
+                    "nameReference": {
+                        "link": "https://localhost/mgmt/tm/ltm/profile/client-ssl/~Common~clientssl?ver=15.1.8"
+                    },
+                    "partition": "Common",
+                    "selfLink": "https://localhost/mgmt/tm/ltm/virtual/~Common~test_virtual_2/profiles/~Common~clientssl?ver=15.1.8"
+                },
+                {
+                    "context": "all",
+                    "fullPath": "/Common/custom-one-connect",
+                    "generation": 25,
+                    "kind": "tm:ltm:virtual:profiles:profilesstate",
+                    "name": "custom-one-connect",
+                    "nameReference": {
+                        "link": "https://localhost/mgmt/tm/ltm/profile/one-connect/~Common~custom-one-connect?ver=15.1.8"
+                    },
+                    "partition": "Common",
+                    "selfLink": "https://localhost/mgmt/tm/ltm/virtual/~Common~test_virtual_2/profiles/~Common~custom-one-connect?ver=15.1.8"
+                },
+                {
+                    "context": "all",
+                    "fullPath": "/Common/custom_http_profle",
+                    "generation": 25,
+                    "kind": "tm:ltm:virtual:profiles:profilesstate",
+                    "name": "custom_http_profle",
+                    "nameReference": {
+                        "link": "https://localhost/mgmt/tm/ltm/profile/http/~Common~custom_http_profle?ver=15.1.8"
+                    },
+                    "partition": "Common",
+                    "selfLink": "https://localhost/mgmt/tm/ltm/virtual/~Common~test_virtual_2/profiles/~Common~custom_http_profle?ver=15.1.8"
+                },
+                {
+                    "context": "serverside",
+                    "fullPath": "/Common/serverssl",
+                    "generation": 25,
+                    "kind": "tm:ltm:virtual:profiles:profilesstate",
+                    "name": "serverssl",
+                    "nameReference": {
+                        "link": "https://localhost/mgmt/tm/ltm/profile/server-ssl/~Common~serverssl?ver=15.1.8"
+                    },
+                    "partition": "Common",
+                    "selfLink": "https://localhost/mgmt/tm/ltm/virtual/~Common~test_virtual_2/profiles/~Common~serverssl?ver=15.1.8"
+                },
+                {
+                    "context": "all",
+                    "fullPath": "/Common/tcp",
+                    "generation": 25,
+                    "kind": "tm:ltm:virtual:profiles:profilesstate",
+                    "name": "tcp",
+                    "nameReference": {
+                        "link": "https://localhost/mgmt/tm/ltm/profile/tcp/~Common~tcp?ver=15.1.8"
+                    },
+                    "partition": "Common",
+                    "selfLink": "https://localhost/mgmt/tm/ltm/virtual/~Common~test_virtual_2/profiles/~Common~tcp?ver=15.1.8"
+                }
+            ],
+            "link": "https://localhost/mgmt/tm/ltm/virtual/~Common~test_virtual_2/profiles?ver=15.1.8"
+        },
+        "rateLimit": "disabled",
+        "rateLimitDstMask": 0,
+        "rateLimitMode": "object",
+        "rateLimitSrcMask": 0,
+        "rules": [
+            "/Common/http_virtual_iRule-traffic-mgmt",
+            "/Common/http_virtual_iRulev2"
+        ],
+        "rulesReference": [
+            {
+                "link": "https://localhost/mgmt/tm/ltm/rule/~Common~http_virtual_iRule-traffic-mgmt?ver=15.1.8"
+            },
+            {
+                "link": "https://localhost/mgmt/tm/ltm/rule/~Common~http_virtual_iRulev2?ver=15.1.8"
+            }
+        ],
+        "selfLink": "https://localhost/mgmt/tm/ltm/virtual/test_virtual_2?expandSubcollections=true&ver=15.1.8",
+        "serversslUseSni": "disabled",
+        "serviceDownImmediateAction": "none",
+        "source": "0.0.0.0/0",
+        "sourceAddressTranslation": {
+            "type": "none"
+        },
+        "sourcePort": "preserve",
+        "synCookieStatus": "not-activated",
+        "translateAddress": "enabled",
+        "translatePort": "enabled",
+        "vlansDisabled": true,
+        "vsIndex": 9
+    },
+    {
+        "addressStatus": "yes",
+        "autoLasthop": "default",
+        "cmpEnabled": "yes",
+        "connectionLimit": 0,
+        "creationTime": "2024-01-31T21:33:55Z",
+        "description": "created by ansible",
+        "destination": "/Common/10.10.100.112:443",
+        "enabled": true,
+        "evictionProtected": "disabled",
+        "fullPath": "test_virtual_3",
+        "generation": 28,
+        "gtmScore": 0,
+        "ipProtocol": "tcp",
+        "kind": "tm:ltm:virtual:virtualstate",
+        "lastModifiedTime": "2024-01-31T22:01:04Z",
+        "mask": "255.255.255.255",
+        "mirror": "disabled",
+        "mobileAppTunnel": "disabled",
+        "name": "test_virtual_3",
+        "nat64": "disabled",
+        "policiesReference": {
+            "isSubcollection": true,
+            "link": "https://localhost/mgmt/tm/ltm/virtual/~Common~test_virtual_3/policies?ver=15.1.8"
+        },
+        "pool": "/Common/http-pool",
+        "poolReference": {
+            "link": "https://localhost/mgmt/tm/ltm/pool/~Common~http-pool?ver=15.1.8"
+        },
+        "profilesReference": {
+            "isSubcollection": true,
+            "items": [
+                {
+                    "context": "all",
+                    "fullPath": "/Common/access-logonpage-protection-service",
+                    "generation": 28,
+                    "kind": "tm:ltm:virtual:profiles:profilesstate",
+                    "name": "access-logonpage-protection-service",
+                    "nameReference": {
+                        "link": "https://localhost/mgmt/tm/ltm/profile/service/~Common~access-logonpage-protection-service?ver=15.1.8"
+                    },
+                    "partition": "Common",
+                    "selfLink": "https://localhost/mgmt/tm/ltm/virtual/~Common~test_virtual_3/profiles/~Common~access-logonpage-protection-service?ver=15.1.8"
+                },
+                {
+                    "context": "all",
+                    "fullPath": "/Common/custom-one-connect",
+                    "generation": 28,
+                    "kind": "tm:ltm:virtual:profiles:profilesstate",
+                    "name": "custom-one-connect",
+                    "nameReference": {
+                        "link": "https://localhost/mgmt/tm/ltm/profile/one-connect/~Common~custom-one-connect?ver=15.1.8"
+                    },
+                    "partition": "Common",
+                    "selfLink": "https://localhost/mgmt/tm/ltm/virtual/~Common~test_virtual_3/profiles/~Common~custom-one-connect?ver=15.1.8"
+                },
+                {
+                    "context": "all",
+                    "fullPath": "/Common/tcp",
+                    "generation": 28,
+                    "kind": "tm:ltm:virtual:profiles:profilesstate",
+                    "name": "tcp",
+                    "nameReference": {
+                        "link": "https://localhost/mgmt/tm/ltm/profile/tcp/~Common~tcp?ver=15.1.8"
+                    },
+                    "partition": "Common",
+                    "selfLink": "https://localhost/mgmt/tm/ltm/virtual/~Common~test_virtual_3/profiles/~Common~tcp?ver=15.1.8"
+                }
+            ],
+            "link": "https://localhost/mgmt/tm/ltm/virtual/~Common~test_virtual_3/profiles?ver=15.1.8"
+        },
+        "rateLimit": "disabled",
+        "rateLimitDstMask": 0,
+        "rateLimitMode": "object",
+        "rateLimitSrcMask": 0,
+        "selfLink": "https://localhost/mgmt/tm/ltm/virtual/test_virtual_3?expandSubcollections=true&ver=15.1.8",
+        "serversslUseSni": "disabled",
+        "serviceDownImmediateAction": "none",
+        "source": "0.0.0.0/0",
+        "sourceAddressTranslation": {
+            "type": "automap"
+        },
+        "sourcePort": "preserve",
+        "synCookieStatus": "not-activated",
+        "translateAddress": "enabled",
+        "translatePort": "enabled",
+        "vlansDisabled": true,
+        "vsIndex": 10
+    }
+]

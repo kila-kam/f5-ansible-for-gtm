@@ -1,0 +1,84 @@
+---
+# tasks file for f5_single_device_manager_role
+
+
+- name: Collect device information for the F5
+  bigip_device_info:
+    gather_subset:
+     - devices
+    provider:
+      server: "{{ ansible_host }}"
+      user: "{{ ansible_user }}"
+      password: "{{ ansible_password }}"
+      server_port: 443
+      validate_certs: false
+      no_f5_teem: true
+  register: device_info
+  delegate_to: localhost
+
+- name:
+  debug:
+    var: device_info.devices
+
+- name: Check no more than 1 device.
+  fail: 
+    msg: "This is not a standalone device"
+  when: device_info.devices | length != 1 
+  delegate_to: localhost
+
+- name: Check device state to ensure it is active.
+  fail:
+    msg: "There is an issue with device state"
+  when: device_info.devices[0].failover_state != "active"
+  delegate_to: localhost
+
+- name: Get the active device IP
+  set_fact:
+    active_f5_ip: "{{item.management_address }}"
+    standby_f5_ip: "{{ item.management_address }}"
+    active_f5_hostname: "{{ item.hostname }}"
+    standby_f5_hostname: "{{ item.hostname }}"
+    sync_group: "single device"
+    auto_sync: true
+  loop: "{{ device_info.devices }}"
+  when: item.failover_state =="active"
+  delegate_to: localhost
+
+#
+- name: login via URI 
+  uri:
+    url: https://{{ active_f5_ip  }}/mgmt/shared/authn/login
+    method: POST
+    body_format: json
+    validate_certs: false
+    body:
+      username: "{{ ansible_user }}"
+      password: "{{ ansible_password }}"
+      loginProviderName: "tmos"
+  register: login
+  delegate_to: localhost
+
+- name:  Save F5 token fact
+  set_fact:
+    bigip_auth_token: "{{ login.json.token.token }}"
+
+- name: Extend lifetime of  f5 token 
+  uri:
+    url: https://{{ active_f5_ip }}/mgmt/shared/authz/tokens/{{bigip_auth_token}}
+    headers:
+      X-F5-Auth-Token: "{{ bigip_auth_token }}"
+    method: PATCH
+    body_format: json
+    body:
+      timeout: "14400" 
+    validate_certs: false
+  delegate_to: localhost
+
+#- name: Test variable value not as expected
+#  fail:
+#    msg:
+#     - "Test plan {{ test_description }}: varible not set as expected."
+#     - "{{ item.var_name }} - {{ lookup('vars', item.var_name) }} "
+#  loop: "{{ test_var_set }}"
+#  when: test_mode and item.var_value != lookup('vars', item.var_name) 
+#  tags: test

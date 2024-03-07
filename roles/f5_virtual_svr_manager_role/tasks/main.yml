@@ -1,0 +1,11 @@
+---
+# tasks file for f5_virtual_svr_manager_role
+- name: Parse data of interests
+  set_fact:
+    parsed_vs_data: "{{ item }}"
+  loop: "{{ vs_data.virtual_servers }}"
+  when: vs_name == item.name
+
+- name: Parse data of interests
+  set_fact:
+    parsed_vs_list : "{{ parsed_vs_list  + [ parsed_vs_data ] }}"
