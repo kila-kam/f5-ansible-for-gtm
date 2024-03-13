@@ -1,7 +1,0 @@
----
-/Common/lon1-f5-dev.local, /Common/gslb_pool_1, /Common/http_virtual, Available
-/Common/lon1-f5-dev.local, /Common/gslb_pool_1, /Common/https_virtual, Available: disabled directly
-/Common/lon1-f5-dev.local, /Common/gslb_pool_2, /Common/ssh_xbuntu_mgmt, Available
-/Common/lon1-f5-dev.local, /Common/gslb_pool_3, /Common/http_virtual, Available
-/Common/lon1-f5-dev.local, /Common/gslb_pool_3, /Common/http_virtual_wildcard, Available
-

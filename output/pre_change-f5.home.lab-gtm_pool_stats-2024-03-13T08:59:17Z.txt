@@ -1,0 +1,8 @@
+---
+/Common/lon1-f5-dev.local, /Common/gslb_pool_1, /Common/http_virtual, Checking
+/Common/lon1-f5-dev.local, /Common/gslb_pool_1, /Common/http_virtual_wildcard, Checking
+/Common/lon1-f5-dev.local, /Common/gslb_pool_2, /Common/https_virtual, Checking: disabled directly
+/Common/lon1-f5-dev.local, /Common/gslb_pool_2, /Common/ssh_xbuntu_mgmt, Checking
+/Common/lon1-f5-dev.local, /Common/gslb_pool_3, /Common/http_virtual_wildcard, Checking
+/Common/lon1-f5-dev.local, /Common/gslb_pool_3, /Common/https_virtual, Checking: disabled directly
+

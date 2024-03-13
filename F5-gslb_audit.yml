@@ -1,0 +1,50 @@
+---
+- name: gtm checks
+  hosts: dev_f5
+  connection: local
+  gather_facts: true
+
+  vars:
+    partition: Common
+  vars_prompt:
+    - name: net_username
+      prompt: "Enter your Username"
+      private: no
+    - name: net_password
+      prompt: "Enter your password"
+      private: yes
+
+  tasks:
+  - name: Pull out resource variables from service definition
+    set_fact:
+      service_resources: "{{ next_definition }}"
+    loop: "{{ dev_resource_definition }}"
+    loop_control:
+      loop_var: next_definition
+    when: next_definition.name == "gtm_resource_group"
+    tags: audit
+
+  - name: Set fact for empty list
+    set_fact:
+      parsed_gtm_pool: []
+      parsed_gtm_pool_stats: []
+
+  - name: Check URLs in F5 using REST API
+    include_role:
+      name: f5_rest_login
+
+  - name: Check GSLB pool using REST
+    include_role: 
+      name: f5_gslb_manager
+    vars:
+      partition: "{{ service_resources.partition }}"
+      gslb_pool_name: "{{ next_gslb_pool_name }}"
+    loop: "{{ service_resources.gslb_pool_name }}"
+    loop_control:
+      loop_var: next_gslb_pool_name
+    tags: audit
+
+  - name: Save pre-change output
+    template: 
+      src: gtm.j2 
+      dest: "./output/pre_change-{{ inventory_hostname }}-gtm_pool_stats-{{ ansible_date_time.iso8601 }}.txt"

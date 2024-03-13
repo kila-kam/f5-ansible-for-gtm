@@ -1,0 +1,8 @@
+---
+/Common/lon1-f5-dev.local, /Common/gslb_pool_1, /Common/http_virtual,  Monitor /Common/bigip from 10.1.20.240 : DOWN
+/Common/lon1-f5-dev.local, /Common/gslb_pool_1, /Common/http_virtual_wildcard,  Monitor /Common/bigip from 10.1.20.240 : DOWN
+/Common/lon1-f5-dev.local, /Common/gslb_pool_2, /Common/https_virtual,  Monitor /Common/bigip from 10.1.20.240 : DOWN: disabled directly
+/Common/lon1-f5-dev.local, /Common/gslb_pool_2, /Common/ssh_xbuntu_mgmt,  Monitor /Common/bigip from 10.1.20.240 : DOWN
+/Common/lon1-f5-dev.local, /Common/gslb_pool_3, /Common/http_virtual_wildcard,  Monitor /Common/bigip from 10.1.20.240 : DOWN
+/Common/lon1-f5-dev.local, /Common/gslb_pool_3, /Common/https_virtual,  Monitor /Common/bigip from 10.1.20.240 : DOWN: disabled directly
+

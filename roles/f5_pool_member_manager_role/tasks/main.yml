@@ -1,8 +1,0 @@
---- 
-# task  s file for f5_pool_member_manager_role  
-- name: Run the role in live mode.
-  block:
-   - name: Change or check pool using the operation variable.
-     include: pool_member_manager.yml
-  when: not test_mode
-  
